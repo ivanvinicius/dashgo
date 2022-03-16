@@ -22,7 +22,8 @@
 		"react",
 		"@typescript-eslint",
 		"react-hooks",
-		"prettier"
+		"prettier",
+    "eslint-plugin-import-helpers"
 	],
 	"rules": {
 		"prettier/prettier": "error",
@@ -37,6 +38,18 @@
 		"react/self-closing-comp": ["error", {
 			"component": true,
 			"html": true
-		}]
+		}],
+
+		"import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          ["/^react/", "module"],
+          "parent",
+          ["sibling", "index"]
+        ]
+      }
+    ]
 	}
 }
