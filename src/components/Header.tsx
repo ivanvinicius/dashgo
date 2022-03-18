@@ -67,7 +67,7 @@ export function Header() {
           <Box mr="4" textAlign="right">
             <Text>Ivan Vinicius Boneti</Text>
             <Text color="gray.300" fontSize="small">
-              ivanvinicius88@gmail.com
+              ivanvinicius@example.com
             </Text>
           </Box>
 

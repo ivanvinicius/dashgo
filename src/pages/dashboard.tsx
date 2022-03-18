@@ -1,9 +1,10 @@
-import { Box, Flex, SimpleGrid, Text, theme } from '@chakra-ui/react'
+import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
-import { ApexOptions } from 'apexcharts'
 
 import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar'
+import { chartOptions } from '../utils/apexChart/chartOptions'
+import { chartSeries } from '../utils/apexChart/chartSeries'
 
 /**
  * It loads the chart on client side, to avoid an error which says 'window is
@@ -15,72 +16,6 @@ import { Sidebar } from '../components/Sidebar'
 const Chart = dynamic(() => import('react-apexcharts'), {
   ssr: false
 })
-
-const chartOptions = {
-  fill: {
-    colors: [theme.colors.pink[500]],
-    type: 'gradient',
-    gradient: {
-      shade: 'dark',
-      type: 'vertical',
-      shadeIntensity: 0.6,
-      opacityFrom: 0.9,
-      opacityTo: 0.2
-    }
-  },
-  stroke: {
-    colors: [theme.colors.pink[500]]
-  },
-  chart: {
-    toolbar: {
-      show: false
-    },
-    zoom: {
-      enabled: false
-    },
-    foreColor: theme.colors.gray[500]
-  },
-  grid: {
-    show: false
-  },
-  dataLabels: {
-    enabled: false
-  },
-  tooltip: {
-    enabled: false
-  },
-  xaxis: {
-    type: 'datetime',
-    axisBorder: {
-      color: theme.colors.gray[600]
-    },
-    axisTicks: {
-      color: theme.colors.gray[600]
-    },
-    categories: [
-      '2022-01-01T08:30:00.000Z',
-      '2022-02-01T08:30:00.000Z',
-      '2022-03-02T09:30:00.000Z',
-      '2022-04-01T08:30:00.000Z',
-      '2022-05-01T08:30:00.000Z',
-      '2022-06-01T08:30:00.000Z'
-    ]
-  }
-} as ApexOptions
-
-const weekSubscribersSeries = [
-  {
-    name: 'series1',
-    data: [200, 170, 290, 250, 270, 310]
-  }
-]
-
-const openingRateSeries = [
-  {
-    name: 'series1',
-    data: [300, 390, 290, 120, 250, 200]
-  }
-]
 
 export default function Dashboard() {
   return (
@@ -103,7 +38,7 @@ export default function Dashboard() {
 
             <Chart
               options={chartOptions}
-              series={weekSubscribersSeries}
+              series={chartSeries.weeklySubscribers}
               type="area"
               height={200}
               pb="4"
@@ -115,7 +50,7 @@ export default function Dashboard() {
             </Text>
             <Chart
               options={chartOptions}
-              series={openingRateSeries}
+              series={chartSeries.openingRate}
               type="area"
               height={200}
               pb="4"
