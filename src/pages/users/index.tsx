@@ -10,7 +10,8 @@ import {
   Thead,
   Tr,
   Td,
-  Text
+  Text,
+  useBreakpointValue
 } from '@chakra-ui/react'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 
@@ -20,8 +21,13 @@ import { Pagination } from '../../components/Pagination'
 import { Sidebar } from '../../components/Sidebar'
 
 export default function ListUser() {
+  const isWideScreen = useBreakpointValue({
+    base: false,
+    lg: true
+  })
+
   return (
-    <Flex direction="column" h="100vh">
+    <Box>
       <Header />
 
       <Flex w="100%" mx="auto" my="6" px="6" maxW={1480}>
@@ -44,18 +50,23 @@ export default function ListUser() {
           <Table colorScheme="whiteAlpha">
             <Thead>
               <Tr>
-                <Th px="6" color="gray.300" width="8">
+                <Th px={['4', '4', '6']} color="gray.300" width="8">
                   <Checkbox colorScheme="pink" />
                 </Th>
                 <Th>Usuário</Th>
-                <Th>Data de cadastro</Th>
-                <Th w="8" />
+
+                {isWideScreen && (
+                  <>
+                    <Th>Data de cadastro</Th>
+                    <Th w="8" />
+                  </>
+                )}
               </Tr>
             </Thead>
 
             <Tbody>
               <Tr>
-                <Td px="6">
+                <Td px={['4', '4', '6']}>
                   <Checkbox colorScheme="pink" />
                 </Td>
                 <Td>
@@ -68,18 +79,23 @@ export default function ListUser() {
                     </Text>
                   </Box>
                 </Td>
-                <Td>18 de Março de 2022</Td>
-                <Td>
-                  <Button
-                    as="a"
-                    size="sm"
-                    fontSize="sm"
-                    colorScheme="pink"
-                    leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
-                  >
-                    Editar
-                  </Button>
-                </Td>
+
+                {isWideScreen && (
+                  <>
+                    <Td>18 de Março de 2022</Td>
+                    <Td>
+                      <Button
+                        as="a"
+                        size="sm"
+                        fontSize="sm"
+                        colorScheme="pink"
+                        leftIcon={<Icon as={RiPencilLine} fontSize="16" />}
+                      >
+                        Editar
+                      </Button>
+                    </Td>
+                  </>
+                )}
               </Tr>
             </Tbody>
           </Table>
@@ -87,6 +103,6 @@ export default function ListUser() {
           <Pagination />
         </Box>
       </Flex>
-    </Flex>
+    </Box>
   )
 }
