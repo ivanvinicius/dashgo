@@ -19,11 +19,11 @@ export default function Dashboard() {
           minChildWidth="320px"
           alignItems="flex-start"
         >
-          <Box p="8" bg="gray.800" borderRadius={8}>
+          <Box p={['4', '8']} bg="gray.800" borderRadius={8}>
             <Chart title="Inscritos" series={chartSeries.weeklySubscribers} />
           </Box>
 
-          <Box p="8" bg="gray.800" borderRadius={8}>
+          <Box p={['4', '8']} bg="gray.800" borderRadius={8}>
             <Chart title="Taxa de abertura" series={chartSeries.openingRate} />
           </Box>
         </SimpleGrid>
