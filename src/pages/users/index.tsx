@@ -13,6 +13,8 @@ import {
   Text,
   useBreakpointValue
 } from '@chakra-ui/react'
+import Head from 'next/head'
+import Link from 'next/link'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 
 import { Header } from '../../components/Header'
@@ -28,6 +30,10 @@ export default function ListUser() {
 
   return (
     <Box>
+      <Head>
+        <title>dashgo | Usuários</title>
+      </Head>
+
       <Header />
 
       <Flex w="100%" mx="auto" my="6" px="6" maxW={1480}>
@@ -37,15 +43,17 @@ export default function ListUser() {
           <Flex mb="8" justify="space-between" align="center">
             <LargeHeading title="Usuários" />
 
-            <Button
-              as="a"
-              size="sm"
-              fontSize="sm"
-              colorScheme="pink"
-              leftIcon={<Icon as={RiAddLine} fontSize="20" />}
-            >
-              Criar novo
-            </Button>
+            <Link href="/users/create" passHref>
+              <Button
+                as="a"
+                size="sm"
+                fontSize="sm"
+                colorScheme="pink"
+                leftIcon={<Icon as={RiAddLine} fontSize="20" />}
+              >
+                Criar novo
+              </Button>
+            </Link>
           </Flex>
           <Table colorScheme="whiteAlpha">
             <Thead>

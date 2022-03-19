@@ -8,6 +8,8 @@ import {
   SimpleGrid,
   VStack
 } from '@chakra-ui/react'
+import Link from 'next/link'
+import Head from 'next/head'
 import { RiCloseLine, RiSaveLine } from 'react-icons/ri'
 
 import { Input } from '../../components/Form/Input'
@@ -18,6 +20,10 @@ import { Sidebar } from '../../components/Sidebar'
 export default function CreateUser() {
   return (
     <Box>
+      <Head>
+        <title>dashgo | Criar usuário</title>
+      </Head>
+
       <Header />
 
       <Flex w="100%" mx="auto" my="6" px="6" maxW={1480}>
@@ -51,12 +57,15 @@ export default function CreateUser() {
               >
                 Salvar
               </Button>
-              <Button
-                colorScheme="whiteAlpha"
-                leftIcon={<Icon as={RiCloseLine} fontSize="20" />}
-              >
-                Cancelar
-              </Button>
+              <Link href="/users" passHref>
+                <Button
+                  as="a"
+                  colorScheme="whiteAlpha"
+                  leftIcon={<Icon as={RiCloseLine} fontSize="20" />}
+                >
+                  Cancelar
+                </Button>
+              </Link>
             </HStack>
           </Flex>
         </Box>
