@@ -3,7 +3,6 @@ import {
   Button,
   Divider,
   Flex,
-  Heading,
   HStack,
   Icon,
   SimpleGrid,
@@ -13,6 +12,7 @@ import { RiCloseLine, RiSaveLine } from 'react-icons/ri'
 
 import { Input } from '../../components/Form/Input'
 import { Header } from '../../components/Header'
+import { LargeHeading } from '../../components/Heading/LargeHeading'
 import { Sidebar } from '../../components/Sidebar'
 
 export default function CreateUser() {
@@ -24,9 +24,7 @@ export default function CreateUser() {
         <Sidebar />
 
         <Box flex="1" borderRadius={8} bg="gray.800" p="8">
-          <Heading size="lg" fontWeight="normal">
-            Criar usuário
-          </Heading>
+          <LargeHeading title="Criar usuário" />
 
           <Divider my="6" borderColor="gray.700" />
 
