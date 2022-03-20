@@ -18,6 +18,14 @@
 
 ## Visão geral do projeto
 
+Versão responsiva para celulares
+<div align="center">
+ <img src="github/images/dashgo-drawer-responsive.png" alt="Menu">  
+  <img src="github/images/dashgo-home-responsive.png" alt="Home">  
+  <img src="github/images/dashgo-list-responsive.png" alt="Users list">  
+  <img src="github/images/dashgo-form-responsive.png" alt="Create user form">  
+</div>
+
 <div align="center">
   <img src="github/images/dashgo-home.png" alt="Home">  
   <img src="github/images/dashgo-list.png" alt="Users list">  
