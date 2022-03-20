@@ -20,7 +20,8 @@
 
 <div align="center">
   <img src="github/images/dashgo-home.png" alt="Home">  
-  <!-- <img src="github/images/ignews-preview.png" alt="preview">   -->
+  <img src="github/images/dashgo-list.png" alt="Users list">  
+  <img src="github/images/dashgo-form.png" alt="Create user form">  
 </div>
 
 ## Sobre o projeto
