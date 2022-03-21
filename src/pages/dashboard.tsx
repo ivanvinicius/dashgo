@@ -1,5 +1,6 @@
-import { Box, Flex, SimpleGrid } from '@chakra-ui/react'
+import { Box, Flex, SimpleGrid, Spinner } from '@chakra-ui/react'
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
 
 import { Chart } from '../components/Chart'
 import { Header } from '../components/Header'
@@ -7,6 +8,15 @@ import { Sidebar } from '../components/Sidebar'
 import { chartSeries } from '../utils/apexChart/chartSeries'
 
 export default function Dashboard() {
+  const [showChart, setShowChart] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowChart(true), 500)
+
+    // Cleaning the timeout between re-renders to avoid loops
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <Flex direction="column" h="100vh">
       <Head>
@@ -24,12 +34,37 @@ export default function Dashboard() {
           minChildWidth="320px"
           alignItems="flex-start"
         >
-          <Box p={['6', '8']} bg="gray.800" borderRadius="8" pb="4">
-            <Chart title="Inscritos" series={chartSeries.weeklySubscribers} />
+          <Box
+            display="flex"
+            flexDirection="column"
+            p={['6', '8']}
+            bg="gray.800"
+            borderRadius="8"
+            pb="4"
+          >
+            {showChart ? (
+              <Chart title="Inscritos" series={chartSeries.weeklySubscribers} />
+            ) : (
+              <Spinner color="pink.500" alignSelf="center" size="xl" />
+            )}
           </Box>
 
-          <Box p={['6', '8']} bg="gray.800" borderRadius="8" pb="4">
-            <Chart title="Taxa de abertura" series={chartSeries.openingRate} />
+          <Box
+            display="flex"
+            flexDirection="column"
+            p={['6', '8']}
+            bg="gray.800"
+            borderRadius="8"
+            pb="4"
+          >
+            {showChart ? (
+              <Chart
+                title="Taxa de abertura"
+                series={chartSeries.openingRate}
+              />
+            ) : (
+              <Spinner color="pink.500" alignSelf="center" size="xl" />
+            )}
           </Box>
         </SimpleGrid>
       </Flex>

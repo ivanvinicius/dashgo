@@ -17,6 +17,9 @@ export const chartOptions = {
     colors: [theme.colors.pink[500]]
   },
   chart: {
+    chart: {
+      width: '100%'
+    },
     toolbar: {
       show: false
     },
