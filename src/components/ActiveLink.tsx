@@ -14,8 +14,6 @@ export function ActiveLink({
 }: IActiveLinkProps) {
   const { asPath } = useRouter()
 
-  console.log(asPath)
-
   let isActive = false
 
   if (shouldMactchExactHref && (asPath === rest.href || asPath === rest.as)) {
@@ -31,6 +29,7 @@ export function ActiveLink({
 
   return (
     <Link {...rest}>
+      {/* Clone the children element, changing the color attribute by isActive prop */}
       {cloneElement(children, {
         color: isActive ? 'pink.400' : 'gray.50'
       })}
