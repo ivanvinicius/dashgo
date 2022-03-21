@@ -1,6 +1,8 @@
 import { forwardRef, ForwardRefRenderFunction } from 'react'
+import { FieldError } from 'react-hook-form'
 import {
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Input as ChakraInput,
   InputProps as ChakraInputProps
@@ -11,14 +13,15 @@ type refType = HTMLInputElement
 interface IInputBaseProps extends ChakraInputProps {
   name: string
   label?: string
+  error: FieldError
 }
 
 const InputBase: ForwardRefRenderFunction<refType, IInputBaseProps> = (
-  { name, label, ...rest },
+  { name, label, error, ...rest },
   ref
 ) => {
   return (
-    <FormControl>
+    <FormControl isInvalid={!!error}>
       {!!label && <FormLabel htmlFor={name}>{label}</FormLabel>}
 
       <ChakraInput
@@ -34,6 +37,8 @@ const InputBase: ForwardRefRenderFunction<refType, IInputBaseProps> = (
           bgColor: 'gray.900'
         }}
       />
+
+      {!!error && <FormErrorMessage>{error.message}</FormErrorMessage>}
     </FormControl>
   )
 }
