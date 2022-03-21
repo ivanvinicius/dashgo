@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
+import { useEffect } from 'react'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 
 import { Header } from '../../components/Header'
@@ -27,6 +28,14 @@ export default function ListUser() {
     base: false,
     lg: true
   })
+
+  useEffect(() => {
+    async function fetchApiData() {
+      console.log('fetch')
+    }
+
+    fetchApiData()
+  }, [])
 
   return (
     <Box>
