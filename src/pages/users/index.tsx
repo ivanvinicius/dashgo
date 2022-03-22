@@ -17,13 +17,12 @@ import {
 import Head from 'next/head'
 import Link from 'next/link'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
-import { useQuery } from 'react-query'
 
+import { useUsers } from '../../services/hooks/useUsers'
 import { Header } from '../../components/Header'
 import { LargeHeading } from '../../components/Heading/LargeHeading'
 import { Pagination } from '../../components/Pagination'
 import { Sidebar } from '../../components/Sidebar'
-import { api } from '../../services/api'
 
 interface IUserData {
   id: string
@@ -33,18 +32,7 @@ interface IUserData {
 }
 
 export default function ListUser() {
-  const { data, isLoading, error } = useQuery('users', async () => {
-    const response = await api.get('users')
-
-    return response.data.users.map((user: IUserData) => ({
-      ...user,
-      createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric'
-      })
-    }))
-  })
+  const { data, isLoading, isFetching, error } = useUsers()
 
   const isWideScreen = useBreakpointValue({
     base: false,
@@ -64,7 +52,12 @@ export default function ListUser() {
 
         <Box flex="1" borderRadius={8} bg="gray.800" p="8">
           <Flex mb="8" justify="space-between" align="center">
-            <LargeHeading title="Usuários" />
+            <Flex>
+              <LargeHeading title="Usuários" />
+              {!isLoading && isFetching && (
+                <Spinner alignSelf="center" ml="4" color="gray.700" size="md" />
+              )}
+            </Flex>
 
             <Link href="/users/create" passHref>
               <Button
