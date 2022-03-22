@@ -24,13 +24,6 @@ import { LargeHeading } from '../../components/Heading/LargeHeading'
 import { Pagination } from '../../components/Pagination'
 import { Sidebar } from '../../components/Sidebar'
 
-interface IUserData {
-  id: string
-  name: string
-  email: string
-  createdAt: string
-}
-
 export default function ListUser() {
   const { data, isLoading, isFetching, error } = useUsers()
 
@@ -100,7 +93,7 @@ export default function ListUser() {
                 </Thead>
 
                 <Tbody>
-                  {data.map(({ id, name, email, createdAt }: IUserData) => (
+                  {data.map(({ id, name, email, createdAt }) => (
                     <Tr key={id}>
                       <Td px={['4', '4', '6']}>
                         <Checkbox colorScheme="pink" />

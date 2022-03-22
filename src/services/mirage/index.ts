@@ -1,4 +1,4 @@
-import { createServer, Factory, Model } from 'miragejs'
+import { createServer, Factory, Model, Response } from 'miragejs'
 import faker from 'faker'
 
 interface IUserModel {
@@ -30,7 +30,7 @@ export function makeMirageServer() {
     },
 
     seeds(server) {
-      server.createList('user', 10)
+      server.createList('user', 200)
     },
 
     routes() {
@@ -40,7 +40,21 @@ export function makeMirageServer() {
       this.timing = 1000
 
       // Model routes
-      this.get('/users')
+      this.get('/users', function (schema, request) {
+        const { page = 1, perPage = 10 } = request.queryParams
+
+        const total = schema.all('user').length
+
+        const pageStart = (Number(page) - 1) * Number(perPage)
+        const pageEnd = pageStart + Number(perPage)
+
+        const users = this.serialize(schema.all('user')).users.slice(
+          pageStart,
+          pageEnd
+        )
+
+        return new Response(200, { 'x-total-count': String(total) }, { users })
+      })
       this.post('/users')
 
       // Cleaning the namespace to not override the NEXTJS API ROUTES

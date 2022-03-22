@@ -9,23 +9,23 @@ interface IUserData {
   createdAt: string
 }
 
-export function useUsers() {
-  return useQuery(
-    'users',
-    async () => {
-      const response = await api.get('users')
+const TIME_IN_SECONDS = 1000 * 5
 
-      return response.data.users.map((user: IUserData) => ({
-        ...user,
-        createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
-          day: '2-digit',
-          month: 'long',
-          year: 'numeric'
-        })
-      }))
-    },
-    {
-      staleTime: 1000 * 10 // 10 seconds
-    }
-  )
+export async function getUsers(): Promise<IUserData[]> {
+  const response = await api.get('users')
+
+  return response.data.users.map((user: IUserData) => ({
+    ...user,
+    createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    })
+  }))
+}
+
+export function useUsers() {
+  return useQuery('users', getUsers, {
+    staleTime: TIME_IN_SECONDS
+  })
 }
