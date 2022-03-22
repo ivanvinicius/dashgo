@@ -35,7 +35,6 @@ export default function Dashboard() {
           alignItems="flex-start"
         >
           <Box
-            display="flex"
             flexDirection="column"
             p={['6', '8']}
             bg="gray.800"
@@ -45,12 +44,13 @@ export default function Dashboard() {
             {showChart ? (
               <Chart title="Inscritos" series={chartSeries.weeklySubscribers} />
             ) : (
-              <Spinner color="pink.500" alignSelf="center" size="xl" />
+              <Flex justify="center">
+                <Spinner color="pink.500" size="xl" />
+              </Flex>
             )}
           </Box>
 
           <Box
-            display="flex"
             flexDirection="column"
             p={['6', '8']}
             bg="gray.800"
@@ -63,7 +63,9 @@ export default function Dashboard() {
                 series={chartSeries.openingRate}
               />
             ) : (
-              <Spinner color="pink.500" alignSelf="center" size="xl" />
+              <Flex justify="center">
+                <Spinner color="pink.500" size="xl" />
+              </Flex>
             )}
           </Box>
         </SimpleGrid>

@@ -4,7 +4,7 @@ import faker from 'faker'
 interface IUserModel {
   name: string
   email: string
-  created_at: string | Date
+  created_at: string
 }
 
 export function makeMirageServer() {
@@ -23,21 +23,21 @@ export function makeMirageServer() {
           return faker.internet.email().toLocaleLowerCase()
         },
 
-        createAt() {
+        createdAt() {
           return faker.date.recent(10)
         }
       })
     },
 
     seeds(server) {
-      server.createList('user', 200)
+      server.createList('user', 10)
     },
 
     routes() {
       // API access route
       this.namespace = 'api'
       // API delay time
-      this.timing = 800
+      this.timing = 1000
 
       // Model routes
       this.get('/users')
