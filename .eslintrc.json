@@ -35,6 +35,7 @@
 		"no-case-declarations": "off",
 		"@typescript-eslint/no-explicit-any": "off",
 		"multiline-ternary": "off",
+		"no-return-await": "warn",
 		
 		"react/self-closing-comp": ["error", {
 			"component": true,

@@ -1,6 +1,6 @@
 import { useQuery } from 'react-query'
 
-import { api } from '../../services/api'
+import { api } from '../../../services/api'
 
 interface IUserData {
   id: string
@@ -9,19 +9,18 @@ interface IUserData {
   createdAt: string
 }
 
-interface IGetUsersProps {
+interface IProps {
   page: number
 }
 
-interface IGetUsersResponse {
+interface IResponse {
   totalCount: number
   users: IUserData[]
 }
-const TIME_IN_SECONDS = 1000 * 5
 
-export async function getUsers({
-  page
-}: IGetUsersProps): Promise<IGetUsersResponse> {
+const TIME_IN_MINUTES = 1000 * 60 * 60 // 10min
+
+export async function getUsers({ page }: IProps): Promise<IResponse> {
   const { data, headers } = await api.get('users', {
     params: {
       page
@@ -42,11 +41,11 @@ export async function getUsers({
   return { totalCount, users }
 }
 
-export function useUsers({ page }: IGetUsersProps) {
+export function useUsers({ page }: IProps) {
   /** It is important to remember passing ['users', { page }] parameter,
    if it doest not, when the user change the page a new query will not be fetched,
    because 'users' parameter is the same as the storaged one */
   return useQuery(['users', { page }], () => getUsers({ page }), {
-    staleTime: TIME_IN_SECONDS
+    staleTime: TIME_IN_MINUTES
   })
 }

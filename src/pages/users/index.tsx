@@ -12,14 +12,16 @@ import {
   Td,
   Text,
   useBreakpointValue,
-  Spinner
+  Spinner,
+  Link as ChakraLink
 } from '@chakra-ui/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 import { useState } from 'react'
 
-import { useUsers } from '../../services/hooks/useUsers'
+import { useUsers } from '../../services/hooks/users/useUsers'
+import { useUserDetail } from '../../services/hooks/users/useUserDetail'
 import { Header } from '../../components/Header'
 import { LargeHeading } from '../../components/Heading/LargeHeading'
 import { Pagination } from '../../components/Pagination'
@@ -29,6 +31,11 @@ export default function ListUser() {
   const [page, setPage] = useState(1)
   const { data, isLoading, isFetching, error } = useUsers({ page })
   const isWideScreen = useBreakpointValue({ base: false, lg: true })
+
+  // Just an example of how to use React Query Prefecth
+  async function handlePrefecthUser(userId: string) {
+    return useUserDetail({ userId })
+  }
 
   return (
     <Box>
@@ -98,9 +105,13 @@ export default function ListUser() {
                       </Td>
                       <Td>
                         <Box>
-                          <Text fontWeight="bold" color="pink.500">
-                            {name}
-                          </Text>
+                          <ChakraLink
+                            href="#"
+                            color="pink.500"
+                            onMouseEnter={() => handlePrefecthUser(id)}
+                          >
+                            <Text fontWeight="bold">{name}</Text>
+                          </ChakraLink>
                           <Text fontSize="sm" color="gray.300">
                             {email}
                           </Text>
