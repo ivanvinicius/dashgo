@@ -132,7 +132,13 @@ export default function ListUser() {
                 </Tbody>
               </Table>
 
-              <Pagination />
+              <Pagination
+                totalCountOfRegister={200}
+                currentPage={5}
+                onPageChange={() => {
+                  console.log(0)
+                }}
+              />
             </>
           )}
         </Box>
