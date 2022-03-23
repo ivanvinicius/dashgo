@@ -19,22 +19,46 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
 import { useState } from 'react'
+import { GetServerSideProps } from 'next'
 
-import { useUsers } from '../../services/hooks/users/useUsers'
-import { useUserDetail } from '../../services/hooks/users/useUserDetail'
+import {
+  // getUsers,
+  useUsers
+} from '../../services/hooks/users/useUsers'
 import { Header } from '../../components/Header'
 import { LargeHeading } from '../../components/Heading/LargeHeading'
 import { Pagination } from '../../components/Pagination'
 import { Sidebar } from '../../components/Sidebar'
+import { api } from '../../services/api'
+import { queryClient } from '../../services/reactQueryClient'
 
-export default function ListUser() {
-  const [page, setPage] = useState(1)
-  const { data, isLoading, isFetching, error } = useUsers({ page })
+interface IUserData {
+  id: string
+  name: string
+  email: string
+  created_at: string
+  formattedCreatedAt: string
+}
+
+interface IListUserProps {
+  users: IUserData[]
+}
+
+const staleTime = 1000 * 60 * 60 // 10min
+
+export default function ListUser({ users }: IListUserProps) {
   const isWideScreen = useBreakpointValue({ base: false, lg: true })
+  const [page, setPage] = useState(1)
+  const { data, isLoading, isFetching, error } = useUsers(1, {
+    initialData: users
+  })
 
-  // Just an example of how to use React Query Prefecth
   async function handlePrefecthUser(userId: string) {
-    return useUserDetail({ userId })
+    await queryClient.prefetchQuery(
+      ['user', { userId }],
+      async () => api.get(`users/${userId}`),
+      { staleTime }
+    )
   }
 
   return (
@@ -152,4 +176,15 @@ export default function ListUser() {
       </Flex>
     </Box>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  /** It throws an error because MirageJS just runs on client side. To make this
+    fuctionality runs correctly, is necessary to implement NEXT ROUTE API */
+
+  // const { users, totalCount } = await getUsers(1)
+
+  return {
+    props: {}
+  }
 }

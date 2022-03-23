@@ -1,4 +1,4 @@
-import { useQuery } from 'react-query'
+import { useQuery, UseQueryOptions, UseQueryResult } from 'react-query'
 
 import { api } from '../../../services/api'
 
@@ -10,18 +10,14 @@ interface IUserData {
   formattedCreatedAt: string
 }
 
-interface IProps {
-  page: number
-}
-
-interface IResponse {
+interface IGetUsersResponse {
   totalCount: number
   users: IUserData[]
 }
 
-const TIME_IN_MINUTES = 1000 * 60 * 60 // 10min
+const staleTime = 1000 * 60 * 60 // 10min
 
-export async function getUsers({ page }: IProps): Promise<IResponse> {
+export async function getUsers(page: number): Promise<IGetUsersResponse> {
   const { data, headers } = await api.get('users', {
     params: {
       page
@@ -42,11 +38,12 @@ export async function getUsers({ page }: IProps): Promise<IResponse> {
   return { totalCount, users }
 }
 
-export function useUsers({ page }: IProps) {
-  /** It is important to remember passing ['users', { page }] parameter,
-   if it doest not, when the user change the page a new query will not be fetched,
-   because 'users' parameter is the same as the storaged one */
-  return useQuery(['users', { page }], () => getUsers({ page }), {
-    staleTime: TIME_IN_MINUTES
-  })
+/** It is important to remember passing ['users', { page }] parameter,
+ if it doest not, when the user change the page a new query will not be fetched,
+ because 'users' parameter is the same as the storaged one */
+export function useUsers(page: number, options?: UseQueryOptions) {
+  return useQuery(['users', { page }], () => getUsers(page), {
+    staleTime,
+    ...options
+  }) as UseQueryResult<IGetUsersResponse, unknown>
 }
