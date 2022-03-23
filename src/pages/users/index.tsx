@@ -17,6 +17,7 @@ import {
 import Head from 'next/head'
 import Link from 'next/link'
 import { RiAddLine, RiPencilLine } from 'react-icons/ri'
+import { useState } from 'react'
 
 import { useUsers } from '../../services/hooks/useUsers'
 import { Header } from '../../components/Header'
@@ -25,12 +26,9 @@ import { Pagination } from '../../components/Pagination'
 import { Sidebar } from '../../components/Sidebar'
 
 export default function ListUser() {
-  const { data, isLoading, isFetching, error } = useUsers()
-
-  const isWideScreen = useBreakpointValue({
-    base: false,
-    lg: true
-  })
+  const [page, setPage] = useState(1)
+  const { data, isLoading, isFetching, error } = useUsers({ page })
+  const isWideScreen = useBreakpointValue({ base: false, lg: true })
 
   return (
     <Box>
@@ -93,7 +91,7 @@ export default function ListUser() {
                 </Thead>
 
                 <Tbody>
-                  {data.map(({ id, name, email, createdAt }) => (
+                  {data.users.map(({ id, name, email, createdAt }) => (
                     <Tr key={id}>
                       <Td px={['4', '4', '6']}>
                         <Checkbox colorScheme="pink" />
@@ -133,11 +131,9 @@ export default function ListUser() {
               </Table>
 
               <Pagination
-                totalCountOfRegister={200}
-                currentPage={5}
-                onPageChange={() => {
-                  console.log(0)
-                }}
+                totalCountOfRegisters={data.totalCount}
+                currentPage={page}
+                onPageChange={setPage}
               />
             </>
           )}
