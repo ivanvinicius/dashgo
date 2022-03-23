@@ -6,7 +6,8 @@ interface IUserData {
   id: string
   name: string
   email: string
-  createdAt: string
+  created_at: string
+  formattedCreatedAt: string
 }
 
 interface IProps {
@@ -31,7 +32,7 @@ export async function getUsers({ page }: IProps): Promise<IResponse> {
 
   const users = data.users.map((user: IUserData) => ({
     ...user,
-    createdAt: new Date(user.createdAt).toLocaleDateString('pt-BR', {
+    formattedCreatedAt: new Date(user.created_at).toLocaleDateString('pt-BR', {
       day: '2-digit',
       month: 'long',
       year: 'numeric'

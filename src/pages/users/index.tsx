@@ -98,7 +98,7 @@ export default function ListUser() {
                 </Thead>
 
                 <Tbody>
-                  {data.users.map(({ id, name, email, createdAt }) => (
+                  {data.users.map(({ id, name, email, formattedCreatedAt }) => (
                     <Tr key={id}>
                       <Td px={['4', '4', '6']}>
                         <Checkbox colorScheme="pink" />
@@ -120,7 +120,7 @@ export default function ListUser() {
 
                       {isWideScreen && (
                         <>
-                          <Td>{createdAt}</Td>
+                          <Td>{formattedCreatedAt}</Td>
                           <Td>
                             <Button
                               as="a"

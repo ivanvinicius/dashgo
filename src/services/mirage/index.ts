@@ -1,4 +1,10 @@
-import { createServer, Factory, Model, Response } from 'miragejs'
+import {
+  ActiveModelSerializer,
+  createServer,
+  Factory,
+  Model,
+  Response
+} from 'miragejs'
 import faker from 'faker'
 
 interface IUserModel {
@@ -9,6 +15,10 @@ interface IUserModel {
 
 export function makeMirageServer() {
   createServer({
+    serializers: {
+      application: ActiveModelSerializer
+    },
+
     models: {
       user: Model.extend<Partial<IUserModel>>({})
     },
@@ -23,7 +33,7 @@ export function makeMirageServer() {
           return faker.internet.email().toLocaleLowerCase()
         },
 
-        createdAt() {
+        created_at() {
           return faker.date.recent(10)
         }
       })

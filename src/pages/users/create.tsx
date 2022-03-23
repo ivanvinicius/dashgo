@@ -14,11 +14,15 @@ import { RiCloseLine, RiSaveLine } from 'react-icons/ri'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import * as y from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from 'react-query'
+import { useRouter } from 'next/router'
 
 import { Input } from '../../components/Form/Input'
 import { Header } from '../../components/Header'
 import { LargeHeading } from '../../components/Heading/LargeHeading'
 import { Sidebar } from '../../components/Sidebar'
+import { api } from '../../services/api'
+import { queryClient } from '../../services/reactQueryClient'
 
 interface ICreateUserFormData {
   name: string
@@ -37,6 +41,24 @@ const createUserFormSchema = y.object().shape({
 })
 
 export default function CreateUser() {
+  const router = useRouter()
+
+  const createUser = useMutation(
+    async (user: ICreateUserFormData) => {
+      await api.post('/users', {
+        user: {
+          ...user,
+          created_at: new Date()
+        }
+      })
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['users'])
+      }
+    }
+  )
+
   const {
     register,
     formState: { errors, isSubmitting },
@@ -46,8 +68,9 @@ export default function CreateUser() {
   })
 
   const handleCreateUser: SubmitHandler<ICreateUserFormData> = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    console.log('CREATE USER', data)
+    await createUser.mutateAsync(data)
+
+    router.push('/users')
   }
 
   return (
